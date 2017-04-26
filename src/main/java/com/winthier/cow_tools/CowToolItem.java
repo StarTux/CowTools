@@ -93,6 +93,7 @@ public final class CowToolItem implements CustomItem, UncraftableItem {
             } else {
                 // TODO: Replacements?
                 Msg.send(player, "&9Issuing command: &r%s", command);
+                plugin.getLogger().info(String.format("%s issues command: %s", player.getName(), command));
                 player.performCommand(command.substring(1));
                 count += 1;
             }
