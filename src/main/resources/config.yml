@@ -1,0 +1,7 @@
+MaxCommands: 10
+BannedCommands:
+- stop
+- ct
+- cowtools
+Description:
+  Usage: Right click while holding this item in your main hand to run all the commands.

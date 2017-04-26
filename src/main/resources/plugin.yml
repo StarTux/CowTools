@@ -1,0 +1,18 @@
+name: CowTools
+description: Save commands in tools
+author: StarTux
+version: 0.1
+main: com.winthier.cow_tools.CowToolsPlugin
+depend: [ Custom ]
+commands:
+  cowtools:
+    aliases: [ cowtool, ct ]
+    description: Command interface
+    permission: cowtools.cowtools
+    usage: |-
+      &9Cow Tools Usage:
+      &a/ct&r /&7<&oCommand&7> &8-&a Store command
+      &a/ct&r &7<&oLine&7>&r /&7<&oCommand&7> &8-&a Insert command
+      &a/ct&r List &8-&a List commands
+      &a/ct&r Delete &7<&oLine&7> &8-&a Delete command
+permissions: {}
