@@ -105,6 +105,7 @@ public final class CowToolItem implements CustomItem, UncraftableItem {
         int index = 0;
         for (String command: commands) sb.append("\n").append(Msg.format("&a%d)&r %s", ++index, command));
         desc.setDescription(sb.toString());
+        if (!commands.isEmpty()) desc.setDisplayName(commands.get(0));
         desc.apply(item);
         ItemMeta meta = item.getItemMeta();
         for (ItemFlag flag: ItemFlag.values()) meta.addItemFlags(flag);
