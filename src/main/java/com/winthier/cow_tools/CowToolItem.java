@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -52,6 +54,7 @@ public final class CowToolItem implements CustomItem, UncraftableItem {
             return;
         }
         useCowTool(player, item);
+        player.playSound(player.getEyeLocation(), Sound.ENTITY_COW_HURT, SoundCategory.MASTER, 0.33f, 1.2f);
     }
 
     static List<String> getCommands(ItemStack item) {
