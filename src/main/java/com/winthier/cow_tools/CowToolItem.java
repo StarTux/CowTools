@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +23,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public final class CowToolItem implements CustomItem, UncraftableItem {
     public static final String CUSTOM_ID = "cowtools:tool";
     private static final String KEY_OWNER = "owner";
+    private static final String KEY_COMMANDS = "commands";
     private final CowToolsPlugin plugin;
     private final String customId = CUSTOM_ID;
 
@@ -55,16 +55,8 @@ public final class CowToolItem implements CustomItem, UncraftableItem {
     }
 
     static List<String> getCommands(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        ArrayList<String> result = new ArrayList<>();
-        if (meta == null || !meta.hasLore()) return result;
-        for (String line: meta.getLore()) {
-            line = ChatColor.stripColor(line);
-            if (line.startsWith("/")) {
-                result.add(line);
-            }
-        }
-        return result;
+        if (!Dirty.TagWrapper.hasItemConfig(item)) new ArrayList<>();
+        return Dirty.TagWrapper.getItemConfigOf(item).getStringList(KEY_COMMANDS);
     }
 
     static UUID getOwner(ItemStack item) {
@@ -103,10 +95,12 @@ public final class CowToolItem implements CustomItem, UncraftableItem {
 
     void storeCommands(Player player, ItemStack item, List<String> commands) {
         Dirty.TagWrapper.getItemConfigOf(item).setString(KEY_OWNER, player.getUniqueId().toString());
+        Dirty.TagWrapper.getItemConfigOf(item).setStringList(KEY_COMMANDS, commands);
         ItemDescription desc = ItemDescription.of(plugin.getConfig().getConfigurationSection("Description"));
         desc.getStats().put("Owner", player.getName());
         StringBuilder sb = new StringBuilder(Msg.format("&aCOMMANDS"));
-        for (String command: commands) sb.append("\n").append(command);
+        int index = 0;
+        for (String command: commands) sb.append("\n").append(Msg.format("&a%d)&r %s", ++index, command));
         desc.setDescription(sb.toString());
         desc.apply(item);
         ItemMeta meta = item.getItemMeta();
